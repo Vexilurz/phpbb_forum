@@ -31,6 +31,7 @@ if (in_array($mode, array('login', 'logout', 'confirm', 'sendpassword', 'activat
 $user->session_begin();
 $auth->acl($user->data);
 $user->setup('ucp');
+$user->add_lang('mods/quick_reply');
 
 // Setting a variable to let the style designer know where he is...
 $template->assign_var('S_IN_UCP', true);

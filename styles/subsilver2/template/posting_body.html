@@ -184,9 +184,29 @@
 		</tr>
 		<tr>
 			<td align="center">
+				<div id="javaScriptOnly" style="display:none">
+            <!-- BEGIN smiley_pages -->
+            	<div id="page{smiley_pages.PAGE}" style="<!-- IF smiley_pages.FIRST_PAGE -->display: block;<!-- ELSE -->display: none;<!-- ENDIF -->">
+                    <!-- IF not smiley_pages.ONE_PAGE-->{smiley_pages.TOTAL_PAGES}<br /><!-- ENDIF -->
+                    <!-- BEGIN smiley -->
+                    <a href="#" onclick="insert_text('{smiley_pages.smiley.A_SMILEY_CODE}', true); return false;" style="line-height: 20px;"><img src="{smiley_pages.smiley.SMILEY_IMG}" width="{smiley_pages.smiley.SMILEY_WIDTH}" height="{smiley_pages.smiley.SMILEY_HEIGHT}" alt="{smiley_pages.smiley.SMILEY_CODE}" title="{smiley_pages.smiley.SMILEY_DESC}" hspace="2" vspace="2" /></a>
+                    <!-- END smiley -->
+                	<br /><table><tr><td><!-- IF not smiley_pages.FIRST_PAGE --><a href="javascript: void(0);" onclick="document.getElementById('page{smiley_pages.PREV_PAGE}').style.display = 'block'; document.getElementById('page{smiley_pages.PAGE}').style.display = 'none';">&laquo;{L_PREVIOUS}</a><!-- ENDIF --></td><td>
+                    <!-- IF not smiley_pages.LAST_PAGE --><a href="javascript: void(0);" onclick="document.getElementById('page{smiley_pages.NEXT_PAGE}').style.display = 'block'; document.getElementById('page{smiley_pages.PAGE}').style.display = 'none';">{L_NEXT}&raquo;</a><!-- ENDIF --></td></tr></table>
+                </div>
+            <!-- END smiley_pages -->
+</div>
+<div id="noJavaScript" style="display:block">
+            <!-- BEGIN smiley_pages -->
 				<!-- BEGIN smiley -->
-					<a href="#" onclick="insert_text('{smiley.A_SMILEY_CODE}', true); return false;" style="line-height: 20px;"><img src="{smiley.SMILEY_IMG}" width="{smiley.SMILEY_WIDTH}" height="{smiley.SMILEY_HEIGHT}" alt="{smiley.SMILEY_CODE}" title="{smiley.SMILEY_DESC}" hspace="2" vspace="2" /></a>
+					<a href="#" onclick="insert_text('{smiley_pages.smiley.A_SMILEY_CODE}', true); return false;" style="line-height: 20px;"><img src="{smiley_pages.smiley.SMILEY_IMG}" width="{smiley_pages.smiley.SMILEY_WIDTH}" height="{smiley_pages.smiley.SMILEY_HEIGHT}" alt="{smiley_pages.smiley.SMILEY_CODE}" title="{smiley_pages.smiley.SMILEY_DESC}" hspace="2" vspace="2" /></a>
 				<!-- END smiley -->
+            <!-- END smiley_pages -->
+</div>
+<script type="text/javascript">
+    document.getElementById('javaScriptOnly').style.display = 'block';
+    document.getElementById('noJavaScript').style.display = 'none';
+</script>
 			</td>
 		</tr>
 
@@ -339,17 +359,8 @@
 
 
 <!-- IF S_SHOW_ATTACH_BOX or S_SHOW_POLL_BOX -->
-	<tr>
-		<td class="cat" colspan="2" align="center">
-			<input class="btnlite" type="submit" tabindex="5" name="preview" value="{L_PREVIEW}" />
-			&nbsp; <input class="btnmain" type="submit" accesskey="s" tabindex="6" name="post" value="{L_SUBMIT}" />
-			<!-- IF S_SAVE_ALLOWED -->&nbsp; <input class="btnlite" type="submit" accesskey="k" tabindex="7" name="save" value="{L_SAVE_DRAFT}" /><!-- ENDIF -->
-			<!-- IF S_HAS_DRAFTS -->&nbsp; <input class="btnlite" type="submit" accesskey="d" tabindex="8" name="load" value="{L_LOAD_DRAFT}" /><!-- ENDIF -->
-			&nbsp; <input class="btnlite" type="submit" accesskey="c" tabindex="9" name="cancel" value="{L_CANCEL}" />
-		</td>
-	</tr>
-
 	<!-- IF S_SHOW_ATTACH_BOX --><!-- INCLUDE posting_attach_body.html --><!-- ENDIF -->
+	
 
 	<!-- IF S_SHOW_POLL_BOX -->
 		<!-- INCLUDE posting_poll_body.html -->

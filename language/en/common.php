@@ -52,7 +52,9 @@ $lang = array_merge($lang, array(
 	'3_MONTHS'		=> '3 months',
 	'6_MONTHS'		=> '6 months',
 	'7_DAYS'		=> '7 days',
-
+//-- begin mod: Anti Bot Question -------------------------------------------//
+	'AB_QUESTION_EXPLAIN'			=> 'For protection against spam, Answer the above question.',
+//-- end mod: Anti Bot Question -------------------------------------------//
 	'ACCOUNT_ALREADY_ACTIVATED'		=> 'Your account has already been activated.',
 	'ACCOUNT_DEACTIVATED'			=> 'Your account has been manually deactivated and is only able to be reactivated by an administrator.',
 	'ACCOUNT_NOT_ACTIVATED'			=> 'Your account has not been activated yet.',
@@ -464,7 +466,7 @@ $lang = array_merge($lang, array(
 	'READING_FORUM'				=> 'Viewing topics in %s',
 	'READING_GLOBAL_ANNOUNCE'	=> 'Reading global announcement',
 	'READING_LINK'				=> 'Following forum link %s',
-	'READING_TOPIC'				=> 'Reading topic in %s',
+	'READING_TOPIC'				=> 'Reading topic «%2$s» in %1$s',
 	'READ_PROFILE'				=> 'Profile',
 	'REASON'					=> 'Reason',
 	'RECORD_ONLINE_USERS'		=> 'Most users ever online was <strong>%1$s</strong> on %2$s',

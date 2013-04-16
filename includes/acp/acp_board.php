@@ -169,6 +169,7 @@ class acp_board
 						'allow_bbcode'			=> array('lang' => 'ALLOW_BBCODE',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => false),
 						'allow_post_flash'		=> array('lang' => 'ALLOW_POST_FLASH',		'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
 						'allow_smilies'			=> array('lang' => 'ALLOW_SMILIES',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => false),
+						'smilies_per_page'		=> array('lang' => 'SMILIES_PER_PAGE',		'validate' => 'int:0',	'type' => 'text:5:5', 'explain' => true),
 						'allow_post_links'		=> array('lang' => 'ALLOW_POST_LINKS',		'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
 						'allow_nocensors'		=> array('lang' => 'ALLOW_NO_CENSORS',		'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
 						'allow_bookmarks'		=> array('lang' => 'ALLOW_BOOKMARKS',		'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
@@ -254,6 +255,13 @@ class acp_board
 						'coppa_enable'		=> array('lang' => 'ENABLE_COPPA',		'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
 						'coppa_mail'		=> array('lang' => 'COPPA_MAIL',		'validate' => 'string',	'type' => 'textarea:5:40', 'explain' => true),
 						'coppa_fax'			=> array('lang' => 'COPPA_FAX',			'validate' => 'string',	'type' => 'text:25:100', 'explain' => false),
+						//-- begin mod: Anti Bot Question -------------------------------------------//
+						'legend4'			=> 'AB_QUESTION_MOD',
+						'enable_abquestion'	=> array('lang' => 'ABQ_ENABLE',		'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
+						'abquestion'	=> array('lang' => 'AB_QUESTION',		'validate' => 'string',	'type' => 'text:40:100', 'explain' => true),
+						'abanswer'	=> array('lang' => 'AB_ANSWER',			'validate' => 'string',	'type' => 'text:40:100', 'explain' => true),
+						'abanswer2'	=> array('lang' => 'AB_ANSWER_2',		'validate' => 'string',	'type' => 'text:40:100', 'explain' => true),
+						//-- end mod: Anti Bot Question -------------------------------------------//
 
 						'legend4'			=> 'ACP_SUBMIT_CHANGES',
 					)

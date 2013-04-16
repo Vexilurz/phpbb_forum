@@ -37,6 +37,10 @@ class ucp_register
 
 		include($phpbb_root_path . 'includes/functions_profile_fields.' . $phpEx);
 
+		// START Anti-Spam ACP
+		antispam::ucp_preregister();
+		// END Anti-Spam ACP
+
 		$coppa			= (isset($_REQUEST['coppa'])) ? ((!empty($_REQUEST['coppa'])) ? 1 : 0) : false;
 		$agreed			= (!empty($_POST['agreed'])) ? 1 : 0;
 		$submit			= (isset($_POST['submit'])) ? true : false;
@@ -102,6 +106,9 @@ class ucp_register
 					'email_confirm'		=> strtolower(request_var('email_confirm', '')),
 					'lang'				=> $user->lang_name,
 					'tz'				=> request_var('tz', (float) $config['board_timezone']),
+					//-- begin mod: Anti Bot Question -------------------------------------------//
+					'AB_Question' => strtolower(utf8_normalize_nfc(request_var('AB_Question', '', true))),
+					//-- end mod: Anti Bot Question -------------------------------------------//
 				));
 
 			}
@@ -193,6 +200,9 @@ class ucp_register
 					array('string', false, 6, 60),
 					array('email')),
 				'email_confirm'		=> array('string', false, 6, 60),
+				//-- begin mod: Anti Bot Question -------------------------------------------//
+				'AB_Question'		  => array('string', !$config['abanswer']),
+				//-- end mod: Anti Bot Question -------------------------------------------//
 				'tz'				=> array('num', false, -14, 14),
 				'lang'				=> array('language_iso_name'),
 			));
@@ -242,7 +252,24 @@ class ucp_register
 				{
 					$error[] = $user->lang['NEW_EMAIL_ERROR'];
 				}
+				//-- begin mod: Anti Bot Question -------------------------------------------//
+				if ($config['enable_abquestion'])
+				{
+					if ($data['AB_Question'] == '')
+					{
+						$error[] = $user->lang['AB_NO_ANSWER'];
+					}
+						else if ($data['AB_Question'] != strtolower($config['abanswer']) && $data['AB_Question'] != strtolower($config['abanswer2']))
+						{
+							$error[] = $user->lang['AB_QUESTION_ERROR'];
+						}
+				}
+				//-- end mod: Anti Bot Question -------------------------------------------//
 			}
+
+			// START Anti-Spam ACP
+			antispam::ucp_register($data, $error);
+			// END Anti-Spam ACP
 
 			if (!sizeof($error))
 			{
@@ -306,6 +333,10 @@ class ucp_register
 
 				// Register user...
 				$user_id = user_add($user_row, $cp_data);
+
+				// START Anti-Spam ACP
+				antispam::ucp_postregister($user_id, $user_row);
+				// END Anti-Spam ACP
 
 				// This should not happen, because the required variables are listed above...
 				if ($user_id === false)
@@ -457,14 +488,23 @@ class ucp_register
 			'PASSWORD_CONFIRM'	=> $data['password_confirm'],
 			'EMAIL'				=> $data['email'],
 			'EMAIL_CONFIRM'		=> $data['email_confirm'],
+			//-- begin mod: Anti Bot Question -------------------------------------------//
+			'AB_QUESTION'		=> $data['AB_Question'],
+			//-- end mod: Anti Bot Question -------------------------------------------//
 
 			'L_REG_COND'				=> $l_reg_cond,
 			'L_USERNAME_EXPLAIN'		=> sprintf($user->lang[$config['allow_name_chars'] . '_EXPLAIN'], $config['min_name_chars'], $config['max_name_chars']),
 			'L_PASSWORD_EXPLAIN'		=> sprintf($user->lang[$config['pass_complex'] . '_EXPLAIN'], $config['min_pass_chars'], $config['max_pass_chars']),
+			//-- begin mod: Anti Bot Question -------------------------------------------//
+			'L_AB_QUESTION'				=> $config['abquestion'],
+			//-- end mod: Anti Bot Question -------------------------------------------//
 
 			'S_LANG_OPTIONS'	=> language_select($data['lang']),
 			'S_TZ_OPTIONS'		=> tz_select($data['tz']),
 			'S_CONFIRM_REFRESH'	=> ($config['enable_confirm'] && $config['confirm_refresh']) ? true : false,
+			//-- begin mod: Anti Bot Question -------------------------------------------//
+			'S_ABQ_CODE'	=> ($config['enable_abquestion'] == 1) ? true : false,
+			//-- end mod: Anti Bot Question -------------------------------------------//
 			'S_REGISTRATION'	=> true,
 			'S_COPPA'			=> $coppa,
 			'S_HIDDEN_FIELDS'	=> $s_hidden_fields,

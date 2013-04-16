@@ -1,0 +1,9 @@
+<!-- IF S_PRIME_QUICK_LOGIN and not AUTO_REFRESH and not S_USER_LOGGED_IN and not S_IS_BOT -->
+<form method="post" action="{S_PRIME_QUICK_LOGIN}"><span class="genmed">{L_PRIME_QUICK_LOGIN_USERNAME}:</span>
+	<input tabindex="100" class="post" type="text" name="username" size="10" />&nbsp; <span class="genmed">{L_PRIME_QUICK_LOGIN_PASSWORD}:</span>
+	<input tabindex="101" class="post" type="password" name="password" size="10" />&nbsp;
+	<!-- IF S_PRIME_QUICK_LOGIN_AUTO --><input tabindex="102" type="checkbox" class="radio" name="autologin" /><span class="gensmall">{L_PRIME_QUICK_LOGIN_REMEMBER}</span>&nbsp;<!-- IF S_PRIME_QUICK_LOGIN_HIDE -->&nbsp;<!-- ENDIF --><!-- ENDIF -->
+	<!-- IF S_PRIME_QUICK_LOGIN_HIDE --><input tabindex="103" type="checkbox" class="radio" name="viewonline" /><span class="gensmall">{L_PRIME_QUICK_LOGIN_HIDE}</span>&nbsp; <!-- ENDIF -->
+	<input tabindex="104" type="submit" class="btnmain" name="login" value="{L_LOGIN}" />
+</form>
+<!-- ENDIF -->

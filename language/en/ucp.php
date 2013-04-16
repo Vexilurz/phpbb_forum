@@ -58,6 +58,10 @@ $lang = array_merge($lang, array(
 
 // Common language entries
 $lang = array_merge($lang, array(
+//-- begin mod: Anti Bot Question -------------------------------------------//
+	'AB_QUESTION_ERROR'				=> 'The Answer to the Anti-Bot Question you entered is incorrect, Please check your answer and try again.',
+	'AB_NO_ANSWER'				=> 'No Anti-Bot Question Answer Entered.',
+//-- end mod: Anti Bot Question -------------------------------------------//
 	'ACCOUNT_ACTIVE'				=> 'Your account has now been activated. Thank you for registering.',
 	'ACCOUNT_ACTIVE_ADMIN'			=> 'The account has now been activated.',
 	'ACCOUNT_ACTIVE_PROFILE'		=> 'Your account has now been successfully reactivated.',

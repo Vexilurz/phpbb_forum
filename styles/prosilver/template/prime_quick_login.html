@@ -1,0 +1,12 @@
+<!-- IF S_PRIME_QUICK_LOGIN and not AUTO_REFRESH and not S_USER_LOGGED_IN and not S_IS_BOT -->
+<form method="post" action="{S_PRIME_QUICK_LOGIN}" style="float:left;width:60%;overflow:visible;">
+	<fieldset class="quick-login" style="float:left;white-space:nowrap;">
+		<label for="prime_login_username">{L_PRIME_QUICK_LOGIN_USERNAME}:</label>&nbsp;<input tabindex="100" type="text" name="username" id="prime_login_username" size="10" class="inputbox" style="min-width:100px" title="{L_PRIME_QUICK_LOGIN_USERNAME}" />
+		<label for="prime_login_password">{L_PRIME_QUICK_LOGIN_PASSWORD}:</label>&nbsp;<input tabindex="101" type="password" name="password" id="prime_login_password" size="10" class="inputbox" style="min-width:100px" title="{L_PRIME_QUICK_LOGIN_PASSWORD}" />
+		<!-- IF S_PRIME_QUICK_LOGIN_AUTO --><label for="prime_login_auto"><input tabindex="102" type="checkbox" name="autologin" id="prime_login_auto" />&nbsp;{L_PRIME_QUICK_LOGIN_REMEMBER}</label><!-- ENDIF -->
+		<!-- IF S_PRIME_QUICK_LOGIN_HIDE --><label for="prime_login_hide"<!-- IF S_PRIME_QUICK_LOGIN_AUTO --> style="margin-left:0.7em;"<!-- ENDIF -->><input tabindex="103" type="checkbox" name="viewonline" id="prime_login_hide" />&nbsp;{L_PRIME_QUICK_LOGIN_HIDE}</label><!-- ENDIF -->
+		<input tabindex="104" type="submit" name="login" value="{L_LOGIN}" class="button2" />
+	</fieldset>
+</form>
+<p>&nbsp;</p>
+<!-- ENDIF -->

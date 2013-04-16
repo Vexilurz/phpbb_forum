@@ -611,6 +611,11 @@ if (!empty($_EXTRA_URL))
 	}
 }
 
+if ($config['allow_quick_reply'])
+{
+	include($phpbb_root_path . 'includes/quick_reply.' . $phpEx);
+}
+
 // Send vars to template
 $template->assign_vars(array(
 	'FORUM_ID' 		=> $forum_id,
@@ -1145,6 +1150,7 @@ while ($row = $db->sql_fetchrow($result))
 
 				'viewonline'	=> $row['user_allow_viewonline'],
 				'allow_pm'		=> $row['user_allow_pm'],
+				'allow_thanks_pm' => $row['user_allow_thanks_pm'],
 
 				'avatar'		=> ($user->optionget('viewavatars')) ? get_user_avatar($row['user_avatar'], $row['user_avatar_type'], $row['user_avatar_width'], $row['user_avatar_height']) : '',
 				'age'			=> '',
@@ -1163,8 +1169,11 @@ while ($row = $db->sql_fetchrow($result))
 				'msn'			=> ($row['user_msnm'] && $auth->acl_get('u_sendim')) ? append_sid("{$phpbb_root_path}memberlist.$phpEx", "mode=contact&amp;action=msnm&amp;u=$poster_id") : '',
 				'yim'			=> ($row['user_yim']) ? 'http://edit.yahoo.com/config/send_webmesg?.target=' . urlencode($row['user_yim']) . '&amp;.src=pg' : '',
 				'jabber'		=> ($row['user_jabber'] && $auth->acl_get('u_sendim')) ? append_sid("{$phpbb_root_path}memberlist.$phpEx", "mode=contact&amp;action=jabber&amp;u=$poster_id") : '',
-				'search'		=> ($auth->acl_get('u_search')) ? append_sid("{$phpbb_root_path}search.$phpEx", "author_id=$poster_id&amp;sr=posts") : '',
-
+				'search'		=> ($auth->acl_get('u_search')) ? append_sid("{$phpbb_root_path}search.$phpEx",
+				"author_id=$poster_id&amp;sr=posts") : '',
+				// START Anti-Spam ACP
+				'user_flagged'	=> $row['user_flagged'] ? true : false,
+				// END Anti-Spam ACP
 				'author_full'		=> get_username_string('full', $poster_id, $row['username'], $row['user_colour']),
 				'author_colour'		=> get_username_string('colour', $poster_id, $row['username'], $row['user_colour']),
 				'author_username'	=> get_username_string('username', $poster_id, $row['username'], $row['user_colour']),
@@ -1347,6 +1356,17 @@ $prev_post_id = '';
 $template->assign_vars(array(
 	'S_NUM_POSTS' => sizeof($post_list))
 );
+
+include($phpbb_root_path . 'includes/functions_thanks.' . $phpEx);
+array_all_thanks();
+if (isset($_REQUEST['thanks']) && !isset($_REQUEST['rthanks'])) 
+{
+	insert_thanks(request_var('thanks', 0), $user->data['user_id']);
+}
+if (isset($_REQUEST['rthanks']) && !isset($_REQUEST['thanks']))
+{
+	delete_thanks(request_var('rthanks', 0), $user->data['user_id']);
+}
 
 // Output the posts
 $first_unread = $post_unread = false;
@@ -1531,6 +1551,8 @@ for ($i = 0, $end = sizeof($post_list); $i < $end; ++$i)
 		'POSTER_AVATAR'		=> $user_cache[$poster_id]['avatar'],
 		'POSTER_WARNINGS'	=> $user_cache[$poster_id]['warnings'],
 		'POSTER_AGE'		=> $user_cache[$poster_id]['age'],
+		// This value will be used as a parameter for JS insert_text() function, so we use addslashes to handle "special" usernames properly ;)
+		'POSTER_QUOTE'		=> addslashes(get_username_string('username', $poster_id, $row['username'], $row['user_colour'], $row['post_username'])),
 
 		'POST_DATE'			=> $user->format_date($row['post_time'], false, ($view == 'print') ? true : false),
 		'POST_SUBJECT'		=> $row['post_subject'],
@@ -1589,7 +1611,13 @@ for ($i = 0, $end = sizeof($post_list); $i < $end; ++$i)
 
 		'S_IGNORE_POST'		=> ($row['hide_post']) ? true : false,
 		'L_IGNORE_POST'		=> ($row['hide_post']) ? sprintf($user->lang['POST_BY_FOE'], get_username_string('full', $poster_id, $row['username'], $row['user_colour'], $row['post_username']), '<a href="' . $viewtopic_url . "&amp;p={$row['post_id']}&amp;view=show#p{$row['post_id']}" . '">', '</a>') : '',
+		'S_FORUM_THANKS'	=> ($auth->acl_get('f_thanks', $forum_id)) ? true : false,
 	);
+
+if ($auth->acl_get('f_thanks', $forum_id)) 
+{	
+	output_thanks($row['user_id']);
+}
 
 	if (isset($cp_row['row']) && sizeof($cp_row['row']))
 	{
@@ -1598,6 +1626,10 @@ for ($i = 0, $end = sizeof($post_list); $i < $end; ++$i)
 
 	// Dump vars into template
 	$template->assign_block_vars('postrow', $postrow);
+
+	// START Anti-Spam ACP
+	antispam::flagged_output($poster_id, $user_cache[$poster_id], 'postrow.custom_fields', $row['post_id']);
+	// END Anti-Spam ACP
 
 	if (!empty($cp_row['blockrow']))
 	{

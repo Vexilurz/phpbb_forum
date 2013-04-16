@@ -83,7 +83,7 @@ a.fontsize:hover {
 
 /* Icon images
 ---------------------------------------- */
-.sitehome, .icon-faq, .icon-members, .icon-home, .icon-ucp, .icon-register, .icon-logout,
+.sitehome, .icon-faq, .icon-members, .icon-home, .icon-ucp, .icon-register, .icon-logout, .icon-thanks,
 .icon-bookmark, .icon-bump, .icon-subscribe, .icon-unsubscribe, .icon-pages, .icon-search {
 	background-position: 0 50%;
 	background-repeat: no-repeat;
@@ -147,6 +147,8 @@ ul.profile-icons li a:hover { background: none; }
 .info-icon, .info-icon a			{ background: none top left no-repeat; }
 
 /* Set profile icon dimensions */
+ul.profile-icons li.thanks-icon	{ width: {IMG_THANKPOSTS_WIDTH}px; height: {IMG_THANKPOSTS_HEIGHT}px; }
+ul.profile-icons li.removethanks-icon	{ width: {IMG_REMOVETHANKS_WIDTH}px; height: {IMG_REMOVETHANKS_HEIGHT}px; }
 ul.profile-icons li.email-icon		{ width: {IMG_ICON_CONTACT_EMAIL_WIDTH}px; height: {IMG_ICON_CONTACT_EMAIL_HEIGHT}px; }
 ul.profile-icons li.aim-icon	{ width: {IMG_ICON_CONTACT_AIM_WIDTH}px; height: {IMG_ICON_CONTACT_AIM_HEIGHT}px; }
 ul.profile-icons li.yahoo-icon	{ width: {IMG_ICON_CONTACT_YAHOO_WIDTH}px; height: {IMG_ICON_CONTACT_YAHOO_HEIGHT}px; }

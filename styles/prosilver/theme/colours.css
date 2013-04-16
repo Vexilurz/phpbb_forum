@@ -695,6 +695,7 @@ a.fontsize {
 .icon-unsubscribe				{ background-image: url("{T_THEME_PATH}/images/icon_unsubscribe.gif"); }
 .icon-pages						{ background-image: url("{T_THEME_PATH}/images/icon_pages.gif"); }
 .icon-search					{ background-image: url("{T_THEME_PATH}/images/icon_search.gif"); }
+.icon-thanks					{ background-image: url("{T_THEME_PATH}/images/icon_thanks.gif"); }
 
 /* Profile & navigation icons */
 .email-icon, .email-icon a		{ background-image: url("{IMG_ICON_CONTACT_EMAIL_SRC}"); }
@@ -708,6 +709,8 @@ a.fontsize {
 .quote-icon, .quote-icon a		{ background-image: url("{IMG_ICON_POST_QUOTE_SRC}"); }
 
 /* Moderator icons */
+.thanks-icon, .thanks-icon a		{ background-image: url("{IMG_THANKPOSTS_SRC}"); }
+.removethanks-icon, .removethanks-icon a	{ background-image: url("{IMG_REMOVETHANKS_SRC}"); }
 .report-icon, .report-icon a		{ background-image: url("{IMG_ICON_POST_REPORT_SRC}"); }
 .edit-icon, .edit-icon a			{ background-image: url("{IMG_ICON_POST_EDIT_SRC}"); }
 .delete-icon, .delete-icon a		{ background-image: url("{IMG_ICON_POST_DELETE_SRC}"); }

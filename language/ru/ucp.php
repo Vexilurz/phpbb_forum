@@ -58,6 +58,10 @@ $lang = array_merge($lang, array(
 
 // Common language entries
 $lang = array_merge($lang, array(
+//-- begin mod: Anti Bot Question -------------------------------------------//
+'AB_QUESTION_ERROR'				=> 'Введенный ответ на Анти-бот вопрос не правильный, прочитайте вопрос внимательно и попробуйте снова.',
+	'AB_NO_ANSWER'					=> 'Нет ответа на предложенный вопрос',
+//-- end mod: Anti Bot Question -------------------------------------------//
 	'ACCOUNT_ACTIVE'					=> 'Ваш аккаунт был активирован. Спасибо за регистрацию.',
 	'ACCOUNT_ACTIVE_ADMIN'				=> 'Ваш аккаунт был активирован.',
 	'ACCOUNT_ACTIVE_PROFILE'			=> 'Ваш аккаунт был активирован  повторно.',

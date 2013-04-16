@@ -51,6 +51,7 @@ class ucp_prefs
 					'notifypm'		=> request_var('notifypm', (bool) $user->data['user_notify_pm']),
 					'popuppm'		=> request_var('popuppm', (bool) $user->optionget('popuppm')),
 					'allowpm'		=> request_var('allowpm', (bool) $user->data['user_allow_pm']),
+					'allowthankspm'	=> request_var('allowthankspm', (bool) $user->data['user_allow_thanks_pm']),
 				);
 
 				if ($data['notifymethod'] == NOTIFY_IM && (!$config['jab_enable'] || !$user->data['user_jabber'] || !@extension_loaded('xml')))
@@ -87,6 +88,7 @@ class ucp_prefs
 
 						$sql_ary = array(
 							'user_allow_pm'			=> $data['allowpm'],
+							'user_allow_thanks_pm'	=> $data['allowthankspm'],
 							'user_allow_viewemail'	=> $data['viewemail'],
 							'user_allow_massemail'	=> $data['massemail'],
 							'user_allow_viewonline'	=> ($auth->acl_get('u_hideonline')) ? !$data['hideonline'] : $user->data['user_allow_viewonline'],
@@ -143,6 +145,7 @@ class ucp_prefs
 					'S_VIEW_EMAIL'		=> $data['viewemail'],
 					'S_MASS_EMAIL'		=> $data['massemail'],
 					'S_ALLOW_PM'		=> $data['allowpm'],
+					'S_ALLOW_THANKS_PM'	=> $data['allowthankspm'],
 					'S_HIDE_ONLINE'		=> $data['hideonline'],
 					'S_NOTIFY_PM'		=> $data['notifypm'],
 					'S_POPUP_PM'		=> $data['popuppm'],
@@ -183,6 +186,8 @@ class ucp_prefs
 					'sigs'			=> request_var('sigs', (bool) $user->optionget('viewsigs')),
 					'avatars'		=> request_var('avatars', (bool) $user->optionget('viewavatars')),
 					'wordcensor'	=> request_var('wordcensor', (bool) $user->optionget('viewcensors')),
+					'quickreply'		=> request_var('quickreply', (bool) $user->optionget('viewquickreply')),
+					'quickpost'		=> request_var('quickpost', (bool) $user->optionget('viewquickpost')),
 				);
 
 				if ($submit)
@@ -206,6 +211,8 @@ class ucp_prefs
 						$user->optionset('viewsmilies', $data['smilies']);
 						$user->optionset('viewsigs', $data['sigs']);
 						$user->optionset('viewavatars', $data['avatars']);
+						$user->optionset('viewquickreply', $data['quickreply']);
+						$user->optionset('viewquickpost', $data['quickpost']);
 
 						if ($auth->acl_get('u_chgcensors'))
 						{
@@ -288,6 +295,10 @@ class ucp_prefs
 					'S_SIGS'			=> $data['sigs'],
 					'S_AVATARS'			=> $data['avatars'],
 					'S_DISABLE_CENSORS'	=> $data['wordcensor'],
+					'S_QUICKREPLY'		=> $data['quickreply'],
+					'QUICK_REPLY'		=> ($config['allow_quick_reply']) ? true : false,
+					'S_QUICKPOST'		=> $data['quickpost'],
+					'QUICK_POST'		=> ($config['allow_quick_post']) ? true : false,
 
 					'S_CHANGE_CENSORS'		=> ($auth->acl_get('u_chgcensors') && $config['allow_nocensors']) ? true : false,
 

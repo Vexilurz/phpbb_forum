@@ -143,6 +143,10 @@ $lang = array_merge($lang, array(
 
 	'ACP_QUICK_ACCESS'				=> 'Быстрый доступ',
 
+	// Added with Quick reply for phpBB3 MOD
+	'ACP_QUICK_REPLY'			=> 'Быстрый ответ',
+	'LOG_CONFIG_QUICK_REPLY'	=> '<strong>Изменены настройки быстрого ответа</strong>',
+
 	'ACP_RANKS'						=> 'Звания',
 	'ACP_REASONS'					=> 'Управление жалобами',
 	'ACP_REGISTER_SETTINGS'			=> 'Регистрация пользователей',

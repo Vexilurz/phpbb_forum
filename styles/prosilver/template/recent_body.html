@@ -1,0 +1,10 @@
+<!-- BEGIN topicrow -->
+document.writeln('{topicrow.TOPIC_REPLIES}<a href="{topicrow.U_TOPIC}">{topicrow.TOPIC_TITLE}</a><br />\n');
+	<!-- BEGIN first_post_text -->
+	document.writeln('{topicrow.first_post_text.TOPIC_FIRST_POST_TEXT}<br />\n');
+		<!-- BEGIN attachment -->
+		document.writeln('{topicrow.first_post_text.attachment.DISPLAY_ATTACHMENT}<br />\n');
+		<!-- END attachment -->
+	document.writeln('<br />\n');
+	<!-- END first_post_text -->
+<!-- END topicrow -->

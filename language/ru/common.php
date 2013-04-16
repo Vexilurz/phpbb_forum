@@ -52,7 +52,9 @@ $lang = array_merge($lang, array(
 	'3_MONTHS'			=> '3 месяца',
 	'6_MONTHS'			=> '6 месяцев',
 	'7_DAYS'			=> '7 дней',
-
+//-- begin mod: Anti Bot Question -------------------------------------------//
+	'AB_QUESTION_EXPLAIN'			=> 'Для подтверждения того что вы не спам-бот, ответте на поставленый вопрос.',
+//-- end mod: Anti Bot Question -------------------------------------------//
 	'ACCOUNT_ALREADY_ACTIVATED'			=> 'Ваш аккаунт уже был активирован.',
 	'ACCOUNT_DEACTIVATED'				=> 'Ваш аккаунт был отключен вручную и может быть вновь активирован только администратором форума.',
 	'ACCOUNT_NOT_ACTIVATED'				=> 'Ваш аккаунт еще не активирован.',
@@ -466,7 +468,7 @@ $lang = array_merge($lang, array(
 	'READING_FORUM'					=> 'Просмотр форума «%s»',
 	'READING_GLOBAL_ANNOUNCE'		=> 'Чтение общего объявления',
 	'READING_LINK'					=> 'Переход по ссылке форума «%s»',
-	'READING_TOPIC'					=> 'Просмотр темы в форуме «%s»',
+	'READING_TOPIC'					=> 'Просмотр темы «%2$s» в форуме «%1$s»',
 	'READ_PROFILE'					=> 'Профиль',
 	'REASON'						=> 'Причина',
 	'RECORD_ONLINE_USERS'			=> 'Больше всего посетителей (<strong>%1$s</strong>) на форуме было %2$s',

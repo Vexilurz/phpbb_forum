@@ -19,7 +19,7 @@ include($phpbb_root_path . 'includes/functions_posting.' . $phpEx);
 include($phpbb_root_path . 'includes/functions_display.' . $phpEx);
 include($phpbb_root_path . 'includes/message_parser.' . $phpEx);
 
-
+include($phpbb_root_path . 'includes/functions_thanks.' . $phpEx);
 // Start session management
 $user->session_begin();
 $auth->acl($user->data);
@@ -992,6 +992,41 @@ if ($submit || $preview || $refresh)
 		}
 	}
 
+	// START Anti-Spam ACP
+	$sc_title = (empty($post_data['topic_title'])) ? $post_data['post_subject'] : $post_data['topic_title'];
+	$asacp_is_spam = false;
+	if (!sizeof($error) && $config['asacp_spam_words_posting_action'] && antispam::spam_words(array($sc_title, $message_parser->message)))
+	{
+		switch ($config['asacp_spam_words_posting_action'])
+		{
+			case 1 :
+				$user->add_lang('mods/asacp');
+				antispam::add_log('LOG_SPAM_POST_DENIED', array($sc_title, $message_parser->message));
+				$error[] = $user->lang['SPAM_DENIED'];
+			break;
+
+			case 2 :
+				$asacp_is_spam = true;
+			break;
+		}
+	}
+	if (!sizeof($error) && $config['asacp_akismet_post_action'] && antispam::akismet($message_parser->message))
+	{
+		switch ($config['asacp_akismet_post_action'])
+		{
+			case 1 :
+				$user->add_lang('mods/asacp');
+				antispam::add_log('LOG_SPAM_POST_DENIED_AKISMET', array($sc_title, $message_parser->message));
+				$error[] = $user->lang['SPAM_DENIED'];
+			break;
+
+			case 2 :
+				$asacp_is_spam = true;
+			break;
+		}
+	}
+	// END Anti-Spam ACP
+
 	// Store message, sync counters
 	if (!sizeof($error) && $submit)
 	{
@@ -1130,8 +1165,19 @@ if ($submit || $preview || $refresh)
 				$data['topic_replies'] = $post_data['topic_replies'];
 			}
 
+			// START Anti-Spam ACP
+			if ($asacp_is_spam)
+			{
+				$data['force_approved_state'] = false;
+			}
+			// END Anti-Spam ACP
+
 			// The last parameter tells submit_post if search indexer has to be run
 			$redirect_url = submit_post($mode, $post_data['post_subject'], $post_data['username'], $post_data['topic_type'], $poll, $data, $update_message, ($update_message || $update_subject) ? true : false);
+
+			// START Anti-Spam ACP
+			antispam::submit_post($mode, $data['post_id']);
+			// END Anti-Spam ACP
 
 			if ($config['enable_post_confirm'] && !$user->data['is_registered'] && (isset($captcha) && $captcha->is_solved() === true) && ($mode == 'post' || $mode == 'reply' || $mode == 'quote'))
 			{
@@ -1581,6 +1627,7 @@ function handle_post_delete($forum_id, $topic_id, $post_id, &$post_data)
 			);
 
 			$next_post_id = delete_post($forum_id, $topic_id, $post_id, $data);
+			delete_post_thanks ($post_id);
 			$post_username = ($post_data['poster_id'] == ANONYMOUS && !empty($post_data['post_username'])) ? $post_data['post_username'] : $post_data['username'];
 
 			if ($next_post_id === false)

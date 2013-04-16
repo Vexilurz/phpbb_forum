@@ -84,6 +84,8 @@ $lang = array_merge($lang, array(
 	'ALLOW_SIG_LINKS_EXPLAIN'	=> 'If disallowed the <code>[URL]</code> BBCode tag and automatic/magic URLs are disabled.',
 	'ALLOW_SIG_SMILIES'			=> 'Allow use of smilies in user signatures',
 	'ALLOW_SMILIES'				=> 'Allow smilies',
+	'SMILIES_PER_PAGE'			=> 'Smilies per page',
+	'SMILIES_PER_PAGE_EXPLAIN'	=> 'Setting the value to 0 disables smiley pagination.',
 	'ALLOW_TOPIC_NOTIFY'		=> 'Allow subscribing to topics',
 	'BOARD_PM'					=> 'Private messaging',
 	'BOARD_PM_EXPLAIN'			=> 'Enable private messaging for all users.',
@@ -205,6 +207,17 @@ $lang = array_merge($lang, array(
 
 // Registration Settings
 $lang = array_merge($lang, array(
+//-- begin mod: Anti Bot Question -------------------------------------------//
+	'AB_ANSWER'							=> 'Anti-Bot Answer',
+	'AB_ANSWER_EXPLAIN'			=> 'This is the main answer for the question.',
+	'AB_ANSWER_2'						=> 'Anti-Bot Answer Two',
+	'AB_ANSWER_2_EXPLAIN'		=> 'Here you can add a second answer, a good idea if using a question that requires a numerical answer.',
+	'AB_QUESTION_MOD'				=> 'Anti-Bot Question',
+	'AB_QUESTION'						=> 'Anti-Bot Question',
+	'AB_QUESTION_EXPLAIN'		=> 'This is the question a user must answer to register.',
+	'ABQ_ENABLE'						=> 'Enable Anti-Bot Question',
+	'ABQ_ENABLE_EXPLAIN'		=> 'Enable the Anti-Bot question for registering.',
+//-- end mod: Anti Bot Question -------------------------------------------//
 	'ACP_REGISTER_SETTINGS_EXPLAIN'		=> 'Here you are able to define registration and profile related settings.',
 
 	'ACC_ACTIVATION'				=> 'Account activation',

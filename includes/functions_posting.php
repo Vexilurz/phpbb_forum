@@ -110,20 +110,47 @@ function generate_smilies($mode, $forum_id)
 	}
 	$db->sql_freeresult($result);
 
+	$smilies_per_page = $config['smilies_per_page'];
+	
+	$count = 0;
+	$current_page = 1;
+	// Build nested array for smilies
+	foreach ($smilies as $row)
+	{
+		$count++;
+		if ($count > $current_page*$smilies_per_page && $smilies_per_page != 0)
+		{
+			$current_page++;
+		}
+		$new_smilies[$current_page][$count] = $row;
+	}
+	
 	if (sizeof($smilies))
 	{
-		$root_path = (defined('PHPBB_USE_BOARD_URL_PATH') && PHPBB_USE_BOARD_URL_PATH) ? generate_board_url() . '/' : $phpbb_root_path;
-
-		foreach ($smilies as $row)
+		foreach ($new_smilies as $page => $smilies_ary)
 		{
-			$template->assign_block_vars('smiley', array(
-				'SMILEY_CODE'	=> $row['code'],
-				'A_SMILEY_CODE'	=> addslashes($row['code']),
-				'SMILEY_IMG'	=> $root_path . $config['smilies_path'] . '/' . $row['smiley_url'],
-				'SMILEY_WIDTH'	=> $row['smiley_width'],
-				'SMILEY_HEIGHT'	=> $row['smiley_height'],
-				'SMILEY_DESC'	=> $row['emotion'])
-			);
+			$template->assign_block_vars('smiley_pages', array(
+				'PAGE'			=> $page,
+				'TOTAL_PAGES'	=> sprintf($user->lang['PAGE_OF'], $page, $current_page, 1),
+				'FIRST_PAGE'	=> ($page == 1) ? true : false,
+				'PREV_PAGE'		=> $page-1,
+				'NEXT_PAGE'		=> $page+1,
+				'LAST_PAGE'		=> ($page == $current_page) ? true : false,
+				'ONE_PAGE'		=> ($current_page == 1) ? true : false
+			));
+			
+			foreach ($smilies_ary as $key => $row)
+			{
+				$template->assign_block_vars('smiley_pages.smiley', array(
+					'COUNT'			=> $key,
+					'SMILEY_CODE'	=> $row['code'],
+					'A_SMILEY_CODE'	=> addslashes($row['code']),
+					'SMILEY_IMG'	=> $phpbb_root_path . $config['smilies_path'] . '/' . $row['smiley_url'],
+					'SMILEY_WIDTH'	=> $row['smiley_width'],
+					'SMILEY_HEIGHT'	=> $row['smiley_height'],
+					'SMILEY_DESC'	=> $row['emotion']
+				));
+			}
 		}
 	}
 

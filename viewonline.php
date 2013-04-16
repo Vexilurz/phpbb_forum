@@ -241,7 +241,12 @@ while ($row = $db->sql_fetchrow($result))
 					break;
 
 					case 'viewtopic':
-						$location = sprintf($user->lang['READING_TOPIC'], $forum_data[$forum_id]['forum_name']);
+						preg_match('#t=([0-9]+)#', $row['session_page'], $on_page);
+						$sql = 'SELECT topic_title FROM ' . TOPICS_TABLE . " WHERE topic_id = {$on_page[1]}";
+						$topic_result = $db->sql_query($sql);
+						$topic_data = $db->sql_fetchrow($topic_result);
+						$location = sprintf($user->lang['READING_TOPIC'], $forum_data[$forum_id]['forum_name'], $topic_data['topic_title']);
+						$location_url = append_sid("{$phpbb_root_path}viewtopic.$phpEx", 'f=' . $forum_id . '&t=' . $on_page[1]);
 					break;
 
 					case 'viewforum':

@@ -84,6 +84,8 @@ $lang = array_merge($lang, array(
 	'ALLOW_SIG_LINKS_EXPLAIN'		=> 'В случае запрета тег BBCode <code>[URL]</code> и автоматическое преобразование текста в ссылки будут отключены.',
 	'ALLOW_SIG_SMILIES'				=> 'Разрешить смайлики в подписях пользователей',
 	'ALLOW_SMILIES'					=> 'Разрешить смайлики',
+	'SMILIES_PER_PAGE'			=> 'Smilies per page',
+	'SMILIES_PER_PAGE_EXPLAIN'	=> 'Setting the value to 0 disables smiley pagination.',
 	'ALLOW_TOPIC_NOTIFY'			=> 'Разрешить подписку на темы',
 	'BOARD_PM'						=> 'Личные сообщения',
 	'BOARD_PM_EXPLAIN'				=> 'Включение личных сообщений для всех пользователей.',
@@ -205,6 +207,17 @@ $lang = array_merge($lang, array(
 
 // Registration Settings
 $lang = array_merge($lang, array(
+//-- begin mod: Anti Bot Question -------------------------------------------//
+'AB_ANSWER'							=> 'Ответ на анти-бот вопрос',
+	'AB_ANSWER_EXPLAIN'					=> 'Главный ответ на вопрос.',
+	'AB_ANSWER_2'						=> 'Второй ответ на анти-бот вопрос',
+	'AB_ANSWER_2_EXPLAIN'				=> 'Здесь вы можите добавить второй ответ, это неплохая идея при использовании вопроса требующего числового ответа.',
+	'AB_QUESTION_MOD'					=> 'Анти-бот вопрос',
+	'AB_QUESTION'						=> 'Анти-бот вопрос',
+	'AB_QUESTION_EXPLAIN'				=> 'Это вопрос, на который пользователь должен ответить при регистрации.',
+	'ABQ_ENABLE'						=> 'Задействовать Анти-бот вопрос',
+	'ABQ_ENABLE_EXPLAIN'				=> 'Задействовать Анти-бот вопрос для регистрации.',
+//-- end mod: Anti Bot Question -------------------------------------------//
 	'ACP_REGISTER_SETTINGS_EXPLAIN'			=> 'Здесь Вы можете задать настройки, связанные с регистрацией и профилями пользователей',
 
 	'ACC_ACTIVATION'				=> 'Активация аккаунта',
