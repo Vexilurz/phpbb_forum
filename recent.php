@@ -169,7 +169,8 @@ foreach ( $recent_topics as $row )
 	$tags = array('dl', 'dt', 'dd');
 	$message = strip_selected_tags($message, $tags);
 	
-	if ($user->data['user_id'] != 1) // wt: if not Anonymous
+	$unread_topic = false;
+	if ($user->data['user_id'] != ANONYMOUS) // wt: if not Anonymous
 	{
 		$tmpsql = 'SELECT ft.mark_time FROM ' . FORUMS_TRACK_TABLE . ' AS ft WHERE ft.forum_id = ' . $row['forum_id'] . ' AND ft.user_id = ' . $user->data['user_id'];
 		$tmpresult = $db->sql_query($tmpsql);
@@ -177,15 +178,19 @@ foreach ( $recent_topics as $row )
 
 		$unread_topic = $row['topic_last_post_time'] > $mt_res['mark_time'] ? true : false;
 		$db->sql_freeresult($tmpresult);
-		$colour = $unread_topic ? '<font color=#CC0000>' : '<font color=#00AA00>';
-	} else { // wt: if Anonymous
-		$colour = '<font color=#00AA00>';
 	}
-
+	
+	if ($unread_topic)
+	{
+		$replies = '<font color=#CC0000>[' . $replies . ']&gt;</font> ';
+	} else {
+		$replies = '<font color=#00AA00>[' . $replies . ']</font> ';
+	}
+	
 	$template->assign_block_vars('topicrow', array(
 		'U_TOPIC' 		=> $viewtopic_url . '?f=' . $row['forum_id'] . '&amp;t=' . $row['topic_id'] . '&amp;view=unread#unread',
 		'TOPIC_TITLE' 	=> $topic_title,
-		'TOPIC_REPLIES'	=> ($cfg_show_replies) ? $colour . '[' . $replies . '] </font>' : '',
+		'TOPIC_REPLIES'	=> ($cfg_show_replies) ? $replies : '',
 		'S_HAS_ATTACHMENTS'		=> ($cfg_show_first_post && $cfg_show_attachments && !empty($attachments[$row['post_id']])) ? true : false,
 	));
 
