@@ -182,7 +182,7 @@ foreach ( $recent_topics as $row )
 	
 	if ($unread_topic)
 	{
-		$replies = '<font color=#CC0000>[' . $replies . ']&gt;</font> ';
+		$replies = '<font color=#CC0000><b>[</b>' . $replies . '<b>]&gt;</b></font> ';
 	} else {
 		$replies = '<font color=#00AA00>[' . $replies . ']</font> ';
 	}
