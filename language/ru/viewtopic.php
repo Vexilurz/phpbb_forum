@@ -90,6 +90,7 @@ $lang = array_merge($lang, array(
 	'QUICK_MOD'					=> 'Быстрые операции',
 	'QUICKREPLY'				=> 'Быстрый ответ',
 	'QUOTE'						=> 'Цитата',
+	'QUOTE_SELECTED'			=> 'Цитировать выделенный текст',
 
 	'REPLY_TO_TOPIC'			=> 'Ответить на тему',
 	'RETURN_POST'				=> '%sВернуться к сообщению%s',
