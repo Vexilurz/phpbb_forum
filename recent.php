@@ -178,15 +178,16 @@ foreach ( $recent_topics as $row )
 		$mt_res = $db->sql_fetchrow($tmpresult);
 		$unread_topic = $row['topic_last_post_time'] > $mt_res['mark_time'] ? true : false;
 
-		$tmpsql2 = 'SELECT p.post_id FROM ' . POSTS_TABLE . ' AS p WHERE p.topic_id = ' . $row['topic_id'] . ' AND p.post_time > ' . $mt_res['mark_time'] . " ORDER BY p.post_time LIMIT 1";
-		$tmpresult2 = $db->sql_query($tmpsql2);
-		$lup_res = $db->sql_fetchrow($tmpresult2);
-		if ($lup_res['post_id'] != '') 
-		{
-			$last_unread_post_id = 'p' . $lup_res['post_id'];
-		}
+		// $tmpsql2 = 'SELECT p.post_id FROM ' . POSTS_TABLE . ' AS p WHERE p.topic_id = ' . $row['topic_id'] . ' AND p.post_time > ' . $mt_res['mark_time'] . " ORDER BY p.post_time LIMIT 1";
+		// $tmpresult2 = $db->sql_query($tmpsql2);
+		// $lup_res = $db->sql_fetchrow($tmpresult2);
+		// if ($lup_res['post_id'] != '') 
+		// {
+		// 	$last_unread_post_id = 'p' . $lup_res['post_id'];
+		// }
 		$db->sql_freeresult($tmpresult);
-		$db->sql_freeresult($tmpresult2);
+		// $db->sql_freeresult($tmpresult2);
+		$last_unread_post_id = 'p' . $row['topic_last_post_id'];
 	}
 	
 	if ($unread_topic)
@@ -194,7 +195,6 @@ foreach ( $recent_topics as $row )
 		$replies = '<font color=#CC0000><b>[</b>' . $replies . '<b>]&gt;</b></font> ';
 	} else {
 		$replies = '<font color=#00AA00>[' . $replies . ']</font> ';
-		$last_unread_post_id = 'p' . $row['topic_last_post_id'];
 	}
 	
 	$template->assign_block_vars('topicrow', array(
