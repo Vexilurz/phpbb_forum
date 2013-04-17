@@ -168,16 +168,25 @@ foreach ( $recent_topics as $row )
 	$message = str_replace('./', $board_path . '/', $message);
 	$tags = array('dl', 'dt', 'dd');
 	$message = strip_selected_tags($message, $tags);
-	
+
+	$last_unread_post_id = ' ';
 	$unread_topic = false;
 	if ($user->data['user_id'] != ANONYMOUS) // wt: if not Anonymous
 	{
 		$tmpsql = 'SELECT ft.mark_time FROM ' . FORUMS_TRACK_TABLE . ' AS ft WHERE ft.forum_id = ' . $row['forum_id'] . ' AND ft.user_id = ' . $user->data['user_id'];
 		$tmpresult = $db->sql_query($tmpsql);
 		$mt_res = $db->sql_fetchrow($tmpresult);
-
 		$unread_topic = $row['topic_last_post_time'] > $mt_res['mark_time'] ? true : false;
+
+		$tmpsql2 = 'SELECT p.post_id FROM ' . POSTS_TABLE . ' AS p WHERE p.topic_id = ' . $row['topic_id'] . ' AND p.post_time > ' . $mt_res['mark_time'] . " ORDER BY p.post_time LIMIT 1";
+		$tmpresult2 = $db->sql_query($tmpsql2);
+		$lup_res = $db->sql_fetchrow($tmpresult2);
+		if ($lup_res['post_id'] != '') 
+		{
+			$last_unread_post_id = 'p' . $lup_res['post_id'];
+		}
 		$db->sql_freeresult($tmpresult);
+		$db->sql_freeresult($tmpresult2);
 	}
 	
 	if ($unread_topic)
@@ -185,10 +194,11 @@ foreach ( $recent_topics as $row )
 		$replies = '<font color=#CC0000><b>[</b>' . $replies . '<b>]&gt;</b></font> ';
 	} else {
 		$replies = '<font color=#00AA00>[' . $replies . ']</font> ';
+		$last_unread_post_id = 'p' . $row['topic_last_post_id'];
 	}
 	
 	$template->assign_block_vars('topicrow', array(
-		'U_TOPIC' 		=> $viewtopic_url . '?f=' . $row['forum_id'] . '&amp;t=' . $row['topic_id'] . '&amp;view=unread#unread',
+		'U_TOPIC' 		=> $viewtopic_url . '?f=' . $row['forum_id'] . '&amp;t=' . $row['topic_id'] . '&amp;view=unread#' . $last_unread_post_id,
 		'TOPIC_TITLE' 	=> $topic_title,
 		'TOPIC_REPLIES'	=> ($cfg_show_replies) ? $replies : '',
 		'S_HAS_ATTACHMENTS'		=> ($cfg_show_first_post && $cfg_show_attachments && !empty($attachments[$row['post_id']])) ? true : false,
