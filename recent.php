@@ -125,6 +125,7 @@ if($cfg_show_first_post && $cfg_show_attachments)
 // END ATTACHMENT DATA
 //
 //$rowset = array();
+$is_unread_topics_exist = false;
 foreach ( $recent_topics as $row )
 {
 	$topic_title = censor_text($row['topic_title']);
@@ -195,6 +196,7 @@ foreach ( $recent_topics as $row )
 	if ($unread_topic)
 	{
 		$replies = '<font color=#CC0000><b>[</b>' . $replies . '<b>]&gt;</b></font>' . $is_admin_forum . ' ';
+		$is_unread_topics_exist = true;
 	} else {
 		$replies = '<font color=#00AA00>[' . $replies . ']</font>' . $is_admin_forum . ' ';
 	}
@@ -232,7 +234,9 @@ foreach ( $recent_topics as $row )
 
 }
 $db->sql_freeresult($result);
-		
+
+$template->assign_vars(array('REC_IMG' => $is_unread_topics_exist ? '<img src="styles/subsilver2/imageset/forum_unread.gif" alt="Unread exists" />' : '<img src="styles/subsilver2/imageset/forum_read.gif" alt="Nothing to read" />'));
+
 //
 // Load template
 //
