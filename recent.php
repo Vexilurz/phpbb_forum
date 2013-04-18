@@ -189,12 +189,14 @@ foreach ( $recent_topics as $row )
 		// $db->sql_freeresult($tmpresult2);
 		$last_unread_post_id = 'p' . $row['topic_last_post_id'];
 	}
+
+	$is_admin_forum = ($row['forum_id'] == '44') ? '<font color=#0000AA>[A]</font>' : '';
 	
 	if ($unread_topic)
 	{
-		$replies = '<font color=#CC0000><b>[</b>' . $replies . '<b>]&gt;</b></font> ';
+		$replies = '<font color=#CC0000><b>[</b>' . $replies . '<b>]&gt;</b></font>' . $is_admin_forum . ' ';
 	} else {
-		$replies = '<font color=#00AA00>[' . $replies . ']</font> ';
+		$replies = '<font color=#00AA00>[' . $replies . ']</font>' . $is_admin_forum . ' ';
 	}
 	
 	$template->assign_block_vars('topicrow', array(
