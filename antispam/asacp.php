@@ -571,11 +571,11 @@ class antispam
 		{
 			if ($poster_row['user_flagged'])
 			{
-				$flagged_value = '<span class="error">' . $user->lang['YES'] . '</span> [ <a href="' . append_sid("{$phpbb_root_path}antispam/index.$phpEx", "mode=user_unflag&amp;u={$poster_id}&amp;p=$post_id") . '">' . $user->lang['USER_UNFLAG']. '</a> ]';
+				$flagged_value = '<span class="error">Flagged! [ <a href="' . append_sid("{$phpbb_root_path}antispam/index.$phpEx", "mode=user_unflag&amp;u={$poster_id}&amp;p=$post_id") . '">' . $user->lang['USER_UNFLAG']. '</a> ]</span>';
 			}
 			else
 			{
-				$flagged_value = $user->lang['NO'] . ' [ <a href="' . append_sid("{$phpbb_root_path}antispam/index.$phpEx", "mode=user_flag&amp;u={$poster_id}&amp;p=$post_id") . '">' . $user->lang['USER_FLAG']. '</a> ]';
+				$flagged_value = '[ <a href="' . append_sid("{$phpbb_root_path}antispam/index.$phpEx", "mode=user_flag&amp;u={$poster_id}&amp;p=$post_id") . '">' . $user->lang['USER_FLAG']. '</a> ]';
 			}
 
 			self::cp_row_output($user->lang['USER_FLAGGED'], $flagged_value, $template_block);

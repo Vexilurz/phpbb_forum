@@ -199,11 +199,11 @@
 
 					<!-- IF postrow.S_PROFILE_FIELD1 -->
 						<!-- Use a construct like this to include admin defined profile fields. Replace FIELD1 with the name of your field. -->
-						<br /><b>{postrow.PROFILE_FIELD1_NAME}:</b> {postrow.PROFILE_FIELD1_VALUE}
+						<br />{postrow.PROFILE_FIELD1_VALUE}
 					<!-- ENDIF -->
 
 					<!-- BEGIN custom_fields -->
-						<br /><b>{postrow.custom_fields.PROFILE_FIELD_NAME}:</b> {postrow.custom_fields.PROFILE_FIELD_VALUE}
+						<br />{postrow.custom_fields.PROFILE_FIELD_VALUE}
 					<!-- END custom_fields -->
 				</span>
 
