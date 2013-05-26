@@ -191,7 +191,8 @@ foreach ( $recent_topics as $row )
 		$last_unread_post_id = 'p' . $row['topic_last_post_id'];
 	}
 
-	$is_admin_forum = (($row['forum_id'] == '44') or (($row['forum_id'] == '50')))? '<font color=#0000AA>[A]</font>' : '';
+	$is_collab_forum = (($row['forum_id'] == '50') or ($row['forum_id'] == '52') or ($row['forum_id'] == '53'))? '<font color=#0000FF>[C]</font>' : '';
+	$is_admin_forum = ($row['forum_id'] == '44')? '<font color=#444444>[A]</font>' : $is_collab_forum;
 	
 	if ($unread_topic)
 	{
